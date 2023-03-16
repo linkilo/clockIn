@@ -1,12 +1,11 @@
 package cn.nineSeven.filter;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.jwt.JWT;
-import cn.hutool.jwt.JWTUtil;
 import cn.nineSeven.constant.AppHttpCodeEnum;
 import cn.nineSeven.constant.SystemConstant;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.pojo.LoginUser;
+import cn.nineSeven.utils.JWTUtils;
 import cn.nineSeven.utils.WebUtils;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -34,25 +34,27 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        boolean verify = JWTUtil.verify(token, SystemConstant.JWTKey.getBytes());
-        if(!verify) {
-            authenticateFail(response);
+        Long userId = null;
+        try {
+             userId = JWTUtils.getSubject(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            WebUtils.renderString(response, JSON.toJSONString(Result.errorResult(AppHttpCodeEnum.NEED_LOGIN)));
             return;
         }
-        JWT jwt = JWTUtil.parseToken(token);
-        Long userId = (Long) jwt.getPayload("userId");
+
         LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(SystemConstant.redisLoginUser + userId);
 
         if(loginUser == null){
-            authenticateFail(response);
+            WebUtils.renderString(response, JSON.toJSONString(Result.errorResult(AppHttpCodeEnum.NEED_LOGIN)));
             return;
         }
 
+        redisTemplate.expire(SystemConstant.redisLoginUser + userId, 1, TimeUnit.DAYS );
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        filterChain.doFilter(request, response);
     }
 
-    private static void authenticateFail(HttpServletResponse response) {
-        WebUtils.renderString(response, JSON.toJSONString(Result.errorResult(AppHttpCodeEnum.NEED_LOGIN)));
-    }
 }

@@ -4,11 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class LoginUserDto {
+public class RegisterUserDto {
     private String username;
-
+    //昵称
+    private String nickname;
+    //密码
     private String password;
+    //年级
+    private Integer grade;
+
+    private String code;
 }

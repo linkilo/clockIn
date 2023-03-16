@@ -3,6 +3,8 @@ package cn.nineSeven.entity.pojo;
 import java.util.Date;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -37,8 +39,10 @@ public class User {
     //签名
     private String signature;
     //创建时间
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     //修改时间
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     //逻辑删除
     private Integer delFlag;

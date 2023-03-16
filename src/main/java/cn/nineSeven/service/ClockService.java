@@ -1,5 +1,6 @@
 package cn.nineSeven.service;
 
+import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.pojo.Clock;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ClockService extends IService<Clock> {
 
+    Result listAllClock(Integer grade, Integer pageNum, Integer pageSize);
+
+    Result clock(Long id);
 }
 
