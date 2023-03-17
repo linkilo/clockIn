@@ -43,14 +43,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(SystemConstant.redisLoginUser + userId);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(SystemConstant.REDIS_LOGIN_USER + userId);
 
         if(loginUser == null){
             WebUtils.renderString(response, JSON.toJSONString(Result.errorResult(AppHttpCodeEnum.NEED_LOGIN)));
             return;
         }
 
-        redisTemplate.expire(SystemConstant.redisLoginUser + userId, 1, TimeUnit.DAYS );
+        redisTemplate.expire(SystemConstant.REDIS_LOGIN_USER + userId, 1, TimeUnit.DAYS );
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 

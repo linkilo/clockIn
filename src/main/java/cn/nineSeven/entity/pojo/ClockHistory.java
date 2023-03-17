@@ -34,8 +34,13 @@ public class ClockHistory {
     //修改时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-    //逻辑删除
-    private Integer delFlag;
 
+
+    public ClockHistory(Long id, Integer week, Integer duration, Integer isStandard) {
+        this.id = id;
+        this.week = week;
+        this.duration = duration;
+        this.isStandard = isStandard;
+    }
 }
 

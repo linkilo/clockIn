@@ -1,6 +1,7 @@
 package cn.nineSeven.service.impl;
 
 import cn.nineSeven.constant.AppHttpCodeEnum;
+import cn.nineSeven.constant.SystemConstant;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.pojo.Clock;
 import cn.nineSeven.entity.vo.ClockInfoVo;
@@ -42,23 +43,22 @@ public class ClockServiceImpl extends ServiceImpl<ClockMapper, Clock> implements
     public Result clock(Long id) {
         Clock clock = getById(id);
         int status = clock.getStatus();
-        if(status == 0) {
-            clock.setStatus(1);
+        if(status == SystemConstant.CLOCKED_STATUS) {
+            clock.setStatus(SystemConstant.CLOCKING_STATUS);
             clock.setBeginTime(LocalDateTime.now());
             updateById(clock);
 
             StartClockVo startClockVo = BeanCopyUtils.copyBean(clock, StartClockVo.class);
             return Result.okResult(startClockVo);
         }
-
+        clock.setStatus(SystemConstant.CLOCKED_STATUS);
         long duration = ChronoUnit.MINUTES.between(clock.getBeginTime(), LocalDateTime.now());
 
         if(duration >= 60 * 6){
+            updateById(clock);
             return Result.errorResult(AppHttpCodeEnum.CLOCK_TIMEOUT);
         }
         clock.setTotalDuration((int) duration+ clock.getTotalDuration());
-        clock.setStatus(0);
-
 
         updateById(clock);
         StopClockVo stopClockVo = BeanCopyUtils.copyBean(clock, StopClockVo.class);

@@ -12,7 +12,7 @@ public class CLockController {
     @Autowired
     ClockService clockService;
     @GetMapping("/list")
-    public Result listAllClock(Integer grade, Integer pageNum, Integer pageSize){
+    public Result listAllClock(Integer grade, Integer pageNum, Integer pageSize) {
         return clockService.listAllClock(grade, pageNum, pageSize);
     }
     @PostMapping("/{id}")

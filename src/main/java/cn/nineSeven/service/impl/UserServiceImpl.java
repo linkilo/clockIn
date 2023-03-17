@@ -81,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
 
         User user = loginUser.getUser();
-        redisTemplate.opsForValue().set(SystemConstant.redisLoginUser + user.getId(), loginUser, 60 * 24, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(SystemConstant.REDIS_LOGIN_USER + user.getId(), loginUser, 60 * 24, TimeUnit.MINUTES);
 
         String token = JWTUtils.createJWT(user.getId());
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
@@ -136,7 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result logout() {
         Long id = SecurityUtils.getUserId();
-        Boolean flag = redisTemplate.delete(SystemConstant.redisLoginUser);
+        Boolean flag = redisTemplate.delete(SystemConstant.REDIS_LOGIN_USER);
         if(BooleanUtil.isTrue(flag)) {
             return Result.okResult();
         }

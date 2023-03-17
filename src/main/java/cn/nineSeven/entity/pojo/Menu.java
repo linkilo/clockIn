@@ -25,8 +25,6 @@ public class Menu {
     private Date createTime;
     //修改时间
     private Date updateTime;
-    //逻辑删除
-    private Integer delFlag;
 
 }
 

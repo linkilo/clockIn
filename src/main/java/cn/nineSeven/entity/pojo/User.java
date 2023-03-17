@@ -44,8 +44,6 @@ public class User {
     //修改时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-    //逻辑删除
-    private Integer delFlag;
 
 }
 

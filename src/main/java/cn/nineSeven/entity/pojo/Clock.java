@@ -39,8 +39,6 @@ public class Clock {
     //修改时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-    //逻辑删除
-    private Integer delFlag;
 
     public Clock(LocalDateTime beginTime, Integer status, Integer totalDuration, Integer targetDuration) {
         this.beginTime = beginTime;

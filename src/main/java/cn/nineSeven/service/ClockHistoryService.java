@@ -1,5 +1,6 @@
 package cn.nineSeven.service;
 
+import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.pojo.ClockHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ClockHistoryService extends IService<ClockHistory> {
 
+    Result list(Integer week, Integer grade, Integer pageNum, Integer pageSize);
 }
 
