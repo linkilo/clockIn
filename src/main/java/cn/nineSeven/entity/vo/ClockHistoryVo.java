@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PageVo {
-    private List data;
+public class ClockHistoryVo {
+    private Long id;
 
-    private Long total;
+    private Integer week;
+
+    private Integer duration;
+
+    private Integer isStandard;
+
+
 }

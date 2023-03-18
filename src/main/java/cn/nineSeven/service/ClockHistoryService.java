@@ -14,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ClockHistoryService extends IService<ClockHistory> {
 
     Result list(Integer week, Integer grade, Integer pageNum, Integer pageSize);
+
+    Result getClockHistoryById(Long id, Integer pageNum, Integer pageSize);
 }
 
