@@ -19,7 +19,7 @@ public interface ClockHistoryMapper extends BaseMapper<ClockHistory> {
 
     @Select("select user.id, nickname, avatar, week, duration, is_standard\n" +
             "from user left join clock_history on user.id = clock_history.id\n" +
-            "where grade = #{grade} and week = #{week}\n" +
+            "where grade = #{grade} and week = #{week} and clock_history = 0\n" +
             "order by duration DESC\n" +
             "limit #{pageNum}, #{pageSize}")
     List<ClockHistoryListVo> selectClockHistoryList(@Param("week") Integer week,@Param("grade") Integer grade,

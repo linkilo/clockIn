@@ -20,11 +20,12 @@ public class Menu {
     
     private Long id;
     //权限
-    private String menu;
-    //创建时间
+    private String perms;
+
+    private String des;
+
     private Date createTime;
     //修改时间
     private Date updateTime;
-
 }
 

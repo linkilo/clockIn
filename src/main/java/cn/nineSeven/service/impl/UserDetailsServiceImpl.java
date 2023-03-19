@@ -1,7 +1,9 @@
 package cn.nineSeven.service.impl;
 
 import cn.nineSeven.entity.pojo.LoginUser;
+import cn.nineSeven.entity.pojo.Menu;
 import cn.nineSeven.entity.pojo.User;
+import cn.nineSeven.entity.vo.MenuInfoVo;
 import cn.nineSeven.mapper.MenuMapper;
 import cn.nineSeven.mapper.UserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -12,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -29,6 +33,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户名或密码错误");
         }
 
-        return new LoginUser(user, menuMapper.getPermsByUserId(user.getId()));
+        List<Menu> menus = menuMapper.selectMenusByUserId(user.getId());
+
+        List<String> perms = menus.stream()
+                .map(menu -> menu.getPerms())
+                .collect(Collectors.toList());
+        return new LoginUser(user, perms);
     }
 }
