@@ -9,18 +9,10 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClockInfoVo {
-
-    private String nickname;
-
-    private String avatar;
-
+public class UserClockInfoVo {
     private Integer status;
-
-    private LocalDateTime beginTime;
 
     private Integer totalDuration;
 
     private Integer targetDuration;
-
 }

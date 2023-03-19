@@ -1,7 +1,6 @@
 package cn.nineSeven.controller;
 
 import cn.nineSeven.entity.Result;
-import cn.nineSeven.entity.pojo.ClockHistory;
 import cn.nineSeven.service.ClockHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -22,18 +22,17 @@ public class ClockHistoryServiceImpl extends ServiceImpl<ClockHistoryMapper, Clo
     public Result list(Integer week, Integer grade, Integer pageNum, Integer pageSize) {
         ClockHistoryMapper mapper = getBaseMapper();
         List<ClockHistoryListVo> clockHistoryListVos = mapper.selectClockHistoryList(week, grade, (pageNum - 1) * pageSize, pageSize);
-        return Result.okResult(clockHistoryListVos);
+        return Result.okResult(new PageVo(clockHistoryListVos,clockHistoryListVos.size()));
     }
 
     @Override
     public Result getClockHistoryById(Long id, Integer pageNum, Integer pageSize) {
         Page<ClockHistory> page = new Page(pageNum, pageSize);
         LambdaQueryWrapper<ClockHistory> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(ClockHistory::getId, id);
+        lqw.eq(ClockHistory::getId, id).orderByDesc(ClockHistory::getWeek);
 
         page = page(page, lqw);
-        List<ClockHistory> clockHistories = page.getRecords();
-        List<ClockHistoryVo> clockHistoryVos = BeanCopyUtils.copyBeanList(clockHistories, ClockHistoryVo.class);
+        List<ClockHistoryVo> clockHistoryVos = BeanCopyUtils.copyBeanList(page.getRecords(), ClockHistoryVo.class);
 
         return Result.okResult(new PageVo(clockHistoryVos, page.getTotal()));
     }

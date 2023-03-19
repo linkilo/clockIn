@@ -19,4 +19,9 @@ public class CLockController {
     public Result clock(@PathVariable("id") Long id){
         return clockService.clock(id);
     }
+
+    @GetMapping("/{id}")
+    public Result getClockById(@PathVariable("id") Long id) {
+        return clockService.getClockById(id);
+    }
 }

@@ -4,23 +4,17 @@ import cn.nineSeven.constant.AppHttpCodeEnum;
 import cn.nineSeven.constant.SystemConstant;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.pojo.Clock;
-import cn.nineSeven.entity.vo.ClockInfoVo;
-import cn.nineSeven.entity.vo.PageVo;
-import cn.nineSeven.entity.vo.StartClockVo;
-import cn.nineSeven.entity.vo.StopClockVo;
+import cn.nineSeven.entity.vo.*;
 import cn.nineSeven.mapper.ClockMapper;
 import cn.nineSeven.service.ClockService;
 import cn.nineSeven.utils.BeanCopyUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (Clock)表服务实现类
@@ -35,7 +29,14 @@ public class ClockServiceImpl extends ServiceImpl<ClockMapper, Clock> implements
     public Result listAllClock(Integer grade, Integer pageNum, Integer pageSize) {
         ClockMapper mapper = getBaseMapper();
         List<ClockInfoVo> clockInfoVos = mapper.selectAllClock(grade, (pageNum - 1) * pageSize, pageSize);
-        PageVo pageVo = new PageVo(clockInfoVos, clockInfoVos.size());
+        List<ClockListInfoVo> clockListInfoVo = clockInfoVos.stream()
+                .map(i -> {
+                    if (i.getStatus() == 1) {
+                        i.setTotalDuration((int) ChronoUnit.MINUTES.between(i.getBeginTime(), LocalDateTime.now()) + i.getTotalDuration());
+                    }
+                    return BeanCopyUtils.copyBean(i, ClockListInfoVo.class);
+                }).collect(Collectors.toList());
+        PageVo pageVo = new PageVo(clockListInfoVo, clockInfoVos.size());
         return Result.okResult(pageVo);
     }
 
@@ -63,6 +64,16 @@ public class ClockServiceImpl extends ServiceImpl<ClockMapper, Clock> implements
         updateById(clock);
         StopClockVo stopClockVo = BeanCopyUtils.copyBean(clock, StopClockVo.class);
         return Result.okResult(stopClockVo);
+    }
+
+    @Override
+    public Result getClockById(Long id) {
+        Clock clock = getById(id);
+        if(clock.getStatus() == 1){
+            clock.setTotalDuration((int) ChronoUnit.MINUTES.between(clock.getBeginTime(), LocalDateTime.now()) + clock.getTotalDuration());
+        }
+        UserClockInfoVo userClockInfoVo = BeanCopyUtils.copyBean(clock, UserClockInfoVo.class);
+        return Result.okResult(userClockInfoVo);
     }
 }
 

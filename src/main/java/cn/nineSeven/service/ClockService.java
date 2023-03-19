@@ -16,5 +16,7 @@ public interface ClockService extends IService<Clock> {
     Result listAllClock(Integer grade, Integer pageNum, Integer pageSize);
 
     Result clock(Long id);
+
+    Result getClockById(Long id);
 }
 

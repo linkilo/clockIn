@@ -16,11 +16,11 @@ import java.util.List;
  * @since 2023-03-14 16:02:03
  */
 public interface ClockMapper extends BaseMapper<Clock> {
-    @Select("select nickname, avatar, status, total_duration, target_duration\n" +
+    @Select("select nickname, avatar, status, begin_time, total_duration, target_duration\n" +
             "from user left join clock on user.id = clock.id\n" +
             "where grade = #{grade}\n" +
             "order by total_duration DESC\n" +
             "limit #{pageNum}, #{pageSize}")
-    List<ClockInfoVo> selectAllClock(@Param("grade") Integer grade,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<ClockInfoVo> selectAllClock(@Param("grade") Integer grade, @Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 }
 
