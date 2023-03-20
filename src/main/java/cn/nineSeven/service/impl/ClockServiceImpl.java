@@ -75,5 +75,14 @@ public class ClockServiceImpl extends ServiceImpl<ClockMapper, Clock> implements
         UserClockInfoVo userClockInfoVo = BeanCopyUtils.copyBean(clock, UserClockInfoVo.class);
         return Result.okResult(userClockInfoVo);
     }
+
+    @Override
+    public Result updateDuration(Long id, Integer duration) {
+        boolean flag = lambdaUpdate().setSql("total_duration = total_duration+" + duration).eq(Clock::getId, id).update();
+        if(!flag) {
+            return Result.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
+        }
+        return Result.okResult();
+    }
 }
 

@@ -3,6 +3,7 @@ package cn.nineSeven.controller;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.service.ClockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,5 +24,11 @@ public class CLockController {
     @GetMapping("/{id}")
     public Result getClockById(@PathVariable("id") Long id) {
         return clockService.getClockById(id);
+    }
+
+    @PostMapping("/update/{id}")
+    @PreAuthorize("@ps.hasPermission('clock:update:duration')")
+    public Result updateDuration(@PathVariable("id") Long id, Integer duration){
+        return clockService.updateDuration(id, duration);
     }
 }

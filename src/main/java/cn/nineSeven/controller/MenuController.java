@@ -14,7 +14,7 @@ public class MenuController {
 
     @Autowired
     MenuService menuService;
-    @GetMapping
+    @GetMapping("/{id}")
     public Result getAllPermsById(@PathVariable("id") Long id) {
         return menuService.getAllPermsById(id);
     }

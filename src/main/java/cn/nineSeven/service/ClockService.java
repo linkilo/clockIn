@@ -18,5 +18,7 @@ public interface ClockService extends IService<Clock> {
     Result clock(Long id);
 
     Result getClockById(Long id);
+
+    Result updateDuration(Long id, Integer duration);
 }
 
