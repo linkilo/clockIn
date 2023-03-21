@@ -30,10 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-    @Autowired
-    private AuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()

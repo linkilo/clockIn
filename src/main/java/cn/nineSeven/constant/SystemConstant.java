@@ -1,6 +1,8 @@
 package cn.nineSeven.constant;
 
 public class SystemConstant {
+
+
     private SystemConstant(){}
 
     public static String JWTKey = "%$%#DQWs124W@$%!&&*ASD@Q1sqd124!";
@@ -14,4 +16,6 @@ public class SystemConstant {
     public static Integer SECOND_GRADE_CLOCK_TARGET = 2280;
 
     public static String REDIS_WEEK = "clock:week";
+
+    public static String OSS_URL = "http://rrkd756hy.hn-bkt.clouddn.com/avatar/";
 }

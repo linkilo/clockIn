@@ -10,6 +10,7 @@ import cn.nineSeven.constant.SystemConstant;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.dto.LoginUserDto;
 import cn.nineSeven.entity.dto.RegisterUserDto;
+import cn.nineSeven.entity.dto.UpdateUserDto;
 import cn.nineSeven.entity.pojo.Clock;
 import cn.nineSeven.entity.pojo.LoginUser;
 import cn.nineSeven.entity.pojo.User;
@@ -22,6 +23,7 @@ import cn.nineSeven.service.UserService;
 import cn.nineSeven.utils.BeanCopyUtils;
 import cn.nineSeven.utils.JWTUtils;
 import cn.nineSeven.utils.SecurityUtils;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +35,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,10 +67,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Value("${spring.mail.username}")
     private String from;
     @Autowired
-    private JavaMailSender mailSender;	//发送邮件对象
+    private JavaMailSender mailSender;
 
     @Autowired
     private ClockService clockService;
+
+    @Autowired
+    private OssUploadService ossUploadService;
 
 
     @Override
@@ -92,10 +98,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result register(RegisterUserDto registerUserDto, HttpServletRequest request) {
-//        String code = (String) request.getSession().getAttribute("registerCode");
-//        if(!code.equals(registerUserDto.getCode())){
-//            return Result.errorResult(AppHttpCodeEnum.CODE_FALSE);
-//        }
+        String code = (String) request.getSession().getAttribute("registerCode");
+        if(!code.equals(registerUserDto.getCode())){
+            return Result.errorResult(AppHttpCodeEnum.CODE_FALSE);
+        }
         String userName = registerUserDto.getUsername();
         if(StrUtil.isBlank(userName)) {
             return Result.errorResult(AppHttpCodeEnum.REQUIRE_USERNAME);
@@ -148,6 +154,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = getById(id);
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
         return Result.okResult(userInfoVo);
+    }
+
+    @Override
+    public Result updateUserInfo(UpdateUserDto updateUserDto) {
+        User user = BeanCopyUtils.copyBean(updateUserDto, User.class);
+        boolean flag = updateById(user);
+        if(!flag) return Result.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
+        return Result.okResult();
+    }
+
+    @Override
+    public Result uploadAva(MultipartFile file) {
+        return ossUploadService.uploadImg(file);
     }
 }
 

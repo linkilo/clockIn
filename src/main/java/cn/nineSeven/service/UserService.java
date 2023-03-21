@@ -3,8 +3,10 @@ package cn.nineSeven.service;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.dto.LoginUserDto;
 import cn.nineSeven.entity.dto.RegisterUserDto;
+import cn.nineSeven.entity.dto.UpdateUserDto;
 import cn.nineSeven.entity.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,5 +29,10 @@ public interface UserService extends IService<User> {
     Result logout();
 
     Result getUserInfoById(Long id);
+
+    Result updateUserInfo(UpdateUserDto updateUserDto);
+
+    Result uploadAva(MultipartFile file);
+
 }
 

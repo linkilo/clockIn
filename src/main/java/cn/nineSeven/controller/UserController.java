@@ -3,9 +3,11 @@ package cn.nineSeven.controller;
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.entity.dto.LoginUserDto;
 import cn.nineSeven.entity.dto.RegisterUserDto;
+import cn.nineSeven.entity.dto.UpdateUserDto;
 import cn.nineSeven.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,4 +44,13 @@ public class UserController {
         return userService.getUserInfoById(id);
     }
 
+    @PostMapping("/info/update")
+    public Result updateUserInfo(@RequestBody UpdateUserDto updateUserDto){
+        return userService.updateUserInfo(updateUserDto);
+    }
+
+    @PutMapping("/upload")
+    public Result uploadAva(MultipartFile file){
+        return userService.uploadAva(file);
+    }
 }

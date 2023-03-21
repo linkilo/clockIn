@@ -34,7 +34,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception e){
-        //打印异常信息
+
         log.error("{}",e);
         Result result = null;
         if(e instanceof BadCredentialsException){
