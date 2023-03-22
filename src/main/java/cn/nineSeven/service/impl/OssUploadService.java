@@ -39,7 +39,7 @@ public class OssUploadService {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 
         String fileType = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String filePath =  new StringBuilder().append(uuid).append(fileType).toString();
+        String filePath =  new StringBuilder().append("avatar/").append(uuid).append(fileType).toString();
         String url = uploadOss(img, filePath);
         return Result.okResult(url);
     }
@@ -51,7 +51,7 @@ public class OssUploadService {
         Configuration cfg = new Configuration(Region.autoRegion());
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
+
         String key = filePath;
         try {
             InputStream inputStream = imgFile.getInputStream();

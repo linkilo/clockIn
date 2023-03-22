@@ -17,5 +17,5 @@ public class SystemConstant {
 
     public static String REDIS_WEEK = "clock:week";
 
-    public static String OSS_URL = "http://rrkd756hy.hn-bkt.clouddn.com/avatar/";
+    public static String OSS_URL = "http://rrkd756hy.hn-bkt.clouddn.com/";
 }

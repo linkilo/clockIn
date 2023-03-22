@@ -27,7 +27,7 @@ public class CLockController {
         return clockService.getClockById(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("@ps.hasPermission('clock:update:duration')")
     public Result updateDuration(@PathVariable("id") Long id, Integer duration){
         return clockService.updateDuration(id, duration);

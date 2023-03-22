@@ -24,7 +24,7 @@ public class UserController {
         return userService.login(loginUserDto);
     }
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     public Result register(@RequestBody RegisterUserDto registerUserDto, HttpServletRequest request) {
         return userService.register(registerUserDto, request);
     }
@@ -44,12 +44,12 @@ public class UserController {
         return userService.getUserInfoById(id);
     }
 
-    @PostMapping("/info/update")
+    @PutMapping("/info/update")
     public Result updateUserInfo(@RequestBody UpdateUserDto updateUserDto){
         return userService.updateUserInfo(updateUserDto);
     }
 
-    @PutMapping("/upload")
+    @PostMapping("/upload")
     public Result uploadAva(MultipartFile file){
         return userService.uploadAva(file);
     }
