@@ -2,6 +2,7 @@ package cn.nineSeven.controller;
 
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.service.ClockHistoryService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/clockHistory")
+@Api(tags = "打卡历史相关接口")
 public class ClockHistoryController {
     @Autowired
     ClockHistoryService clockHistoryService;

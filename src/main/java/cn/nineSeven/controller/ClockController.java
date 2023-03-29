@@ -2,13 +2,15 @@ package cn.nineSeven.controller;
 
 import cn.nineSeven.entity.Result;
 import cn.nineSeven.service.ClockService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clock")
-public class CLockController {
+@Api(tags = "打卡相关接口")
+public class ClockController {
 
     @Autowired
     ClockService clockService;

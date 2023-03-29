@@ -5,6 +5,10 @@ import cn.nineSeven.entity.dto.LoginUserDto;
 import cn.nineSeven.entity.dto.RegisterUserDto;
 import cn.nineSeven.entity.dto.UpdateUserDto;
 import cn.nineSeven.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,12 +18,14 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户相关接口")
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @PostMapping("/login")
+    @ApiOperation("登录")
     public Result login(LoginUserDto loginUserDto){
         return userService.login(loginUserDto);
     }
@@ -30,6 +36,9 @@ public class UserController {
     }
 
     @PostMapping("/register/sendCode")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名"),
+    })
     public Result sendCode(String username, HttpSession session) {
         return userService.sendCode(username, session);
     }
@@ -50,6 +59,9 @@ public class UserController {
     }
 
     @PostMapping("/upload")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "MultipartFile"),
+    })
     public Result uploadAva(MultipartFile file){
         return userService.uploadAva(file);
     }
