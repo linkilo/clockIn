@@ -6,7 +6,7 @@ public class SystemConstant {
     private SystemConstant(){}
 
     public static String JWTKey = "%$%#DQWs124W@$%!&&*ASD@Q1sqd124!";
-    public static String REDIS_LOGIN_USER = "user:login:";
+    public static String REDIS_LOGIN_USER = "clock:login:";
 
     public static Integer CLOCKING_STATUS = 1;
 
@@ -17,5 +17,5 @@ public class SystemConstant {
 
     public static String REDIS_WEEK = "clock:week";
 
-    public static String OSS_URL = "http://rrkd756hy.hn-bkt.clouddn.com/";
+    public static String OSS_URL = "http://qiniu.gwithl.cn/";
 }

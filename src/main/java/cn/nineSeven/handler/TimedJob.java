@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//每周清空时长
 @Component
 public class TimedJob {
 
     @Autowired
     ClockService clockService;
+
     @Autowired
     RedisTemplate redisTemplate;
 

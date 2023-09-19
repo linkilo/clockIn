@@ -92,10 +92,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result register(RegisterUserDto registerUserDto, HttpServletRequest request) {
-        String code = (String) request.getSession().getAttribute("registerCode");
-        if(!code.equals(registerUserDto.getCode())){
-            return Result.errorResult(AppHttpCodeEnum.CODE_FALSE);
-        }
+        //注册时关闭了邮箱验证码验证，开启验证码验证自行查看发送验证码那个接口
+//        String code = (String) request.getSession().getAttribute("registerCode");
+//        if(!code.equals(registerUserDto.getCode())){
+//            return Result.errorResult(AppHttpCodeEnum.CODE_FALSE);
+//        }
         String userName = registerUserDto.getUsername();
         if(StrUtil.isBlank(userName)) {
             return Result.errorResult(AppHttpCodeEnum.REQUIRE_USERNAME);
@@ -136,7 +137,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result logout() {
         Long id = SecurityUtils.getUserId();
-        Boolean flag = redisTemplate.delete(SystemConstant.REDIS_LOGIN_USER);
+        Boolean flag = redisTemplate.delete(SystemConstant.REDIS_LOGIN_USER + id);
         if(BooleanUtil.isTrue(flag)) {
             return Result.okResult();
         }
@@ -158,6 +159,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return Result.okResult();
     }
 
+    //上传头像
     @Override
     public Result uploadAva(MultipartFile file) {
         return ossUploadService.uploadImg(file);

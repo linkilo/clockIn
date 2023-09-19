@@ -39,7 +39,7 @@ public class OssUploadService {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 
         String fileType = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String filePath =  new StringBuilder().append("avatar/").append(uuid).append(fileType).toString();
+        String filePath =  new StringBuilder().append("clock/").append(uuid).append(fileType).toString();
         String url = uploadOss(img, filePath);
         return Result.okResult(url);
     }

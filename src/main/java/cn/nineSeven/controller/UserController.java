@@ -68,7 +68,6 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "MultipartFile"),
     })
-    @SystemLog(businessName = "上传头像")
     public Result uploadAva(MultipartFile file){
         return userService.uploadAva(file);
     }

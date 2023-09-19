@@ -27,6 +27,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(SystemException.class)
     public Result systemExceptionHandler(SystemException e){
+        e.printStackTrace();
         log.error(e.getMessage());
         return Result.errorResult(e.getCode(),e.getMsg());
     }
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception e){
-
+        e.printStackTrace();
         log.error(e.getMessage());
         Result result = null;
         if(e instanceof BadCredentialsException){
